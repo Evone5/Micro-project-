@@ -1,0 +1,135 @@
+package evone;
+import java.util.Scanner;
+
+class mycbank{
+	
+	public Long AccountNumber;
+
+	private String AccountType;
+
+	private String name;
+
+	private long balance;
+
+
+	Scanner sc = new Scanner(System.in);  
+	
+ public void OpenAcc() {
+	System.out.println("Enter Account number:");
+	this.AccountNumber = sc.nextLong();
+	System.out.println("Enter Account type:");
+	this.AccountType = sc.next();
+	System.out.println("Enter Name:");
+    this.name = sc.next();
+    System.out.println("Enter balance:");
+    this.balance = sc.nextLong();
+  }
+ public void DisplayAcc() {
+	System.out.println("Account holder name:"+name);
+	System.out.println("Account number :"+AccountNumber);
+	System.out.println("Account type :"+AccountType);
+	System.out.println("Account balance :"+balance);
+
+}
+public void Deposite()  {
+     System.out.println("Enter the amount to be deposited:");
+     int deposit = sc.nextInt();
+     try
+     {
+     if (deposit <= 0)
+     {
+     throw new InvalidAmountException("Invalid amount, amount <= 0");
+     } 
+     balance += deposit;
+     System.out.println("Amount deposited successfully. New balance: " + balance);
+     }
+     catch(InvalidAmountException e)
+     {
+    	 System.out.println(e.getMessage());
+     }
+ }
+
+
+ public void Withdraw() {
+     System.out.println("Enter the amount to be withdrawn:");
+     int withdraw = sc.nextInt();
+     try
+     {
+		     if (withdraw <= 0) 
+		     {
+		    	 throw new InvalidAmountException("Invalid amount, amount <= 0");
+		    	 }
+		      if (withdraw > balance) 
+		     {
+		      throw new InsufficientAmountException("Your balance is less than " + balance + "\nTransaction failed...!!");
+		      }
+		    balance -= withdraw;
+		System.out.println("Balance after withdrawal: " + balance);
+     }
+     catch(InvalidAmountException e)
+     {
+	 System.out.println(e.getMessage());
+}  catch(InsufficientAmountException e)
+     {
+	 System.out.println(e.getMessage());
+}
+     
+}
+ public boolean search(long AccountNumber) {
+	 return AccountNumber == this.AccountNumber;
+	}
+		
+
+public void Exit(){
+	System.out.println("Exiting........");
+	
+}
+}
+public class customexception {
+	public static void main(String[] args) {
+		mycbank ob = new mycbank();
+	Scanner sc = new Scanner(System.in);
+    String s1="yes";
+    String s2=" null";
+     do {
+     System.out.println("***** Banking System Application *****");
+     System.out.println("1. Open New Account");
+     System.out.println("2. Display Account Details");
+     System.out.println("3. Deposit Amount");
+     System.out.println("4. Withdraw Amount");
+     System.out.println("5. Search Account");
+     System.out.println("6. Exit");
+     System.out.println("Enter your chocie") ;
+     int choice =sc.nextInt();
+     switch( choice )
+     {
+
+case 1:
+  ob.OpenAcc();
+ break;
+case 2:
+ ob. DisplayAcc();
+ break;
+case 3:
+	
+	ob.Deposite();
+	break;
+case 4:
+	ob.Withdraw();
+	break;
+case 5	:
+	ob. search(choice);
+case 6:
+	ob.Exit();
+	break;
+	default:
+		System.out.println("Invalid");
+
+     }
+     System.out.println("do you want to countinue?(yes/no)");
+     s2=sc.next();
+     }
+     while(s1.equals(s2));
+     System.out.println("program ended.....");
+     
+}}
